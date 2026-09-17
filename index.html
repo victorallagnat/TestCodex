@@ -3,120 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reflexe — Cyber Academy</title>
+  <title>La surprise de l'anniversaire</title>
   <style>
-    :root { --ink:#edf4ff; --muted:#8fa1bd; --bg:#07111f; --panel:#0d1b2e; --line:rgba(155,185,225,.16); --cyan:#3ee7d0; --violet:#8977ff; --danger:#ff6978; }
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap');
+    :root { --ink:#3f245b; --cream:#fff9ed; --purple:#8058c7; --pink:#fa6c9b; --yellow:#ffd65b; --blue:#69d7e7; --shadow:0 14px 0 rgba(77,43,101,.12), 0 22px 38px rgba(77,43,101,.16); }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(circle at 18% 15%,#15365c 0,transparent 28rem),radial-gradient(circle at 85% 85%,#211c50 0,transparent 30rem),var(--bg); }
-    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.24; background-image:linear-gradient(rgba(125,169,220,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(125,169,220,.11) 1px,transparent 1px); background-size:42px 42px; mask-image:linear-gradient(to bottom,black,transparent); }
-    main { width:min(100%,1080px); min-height:100vh; margin:auto; padding:28px 24px 40px; position:relative; display:flex; flex-direction:column; }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:20px; }
-    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.02em; }
-    .brand-mark { width:36px; height:36px; display:grid; place-items:center; color:#061320; background:var(--cyan); clip-path:polygon(50% 0,92% 20%,92% 70%,50% 100%,8% 70%,8% 20%); }
-    .eyebrow { color:var(--cyan); text-transform:uppercase; letter-spacing:.18em; font-size:.72rem; font-weight:800; }
-    .round { color:var(--muted); font-size:.9rem; }
-    .screen { flex:1; display:grid; place-items:center; padding:28px 0; }
-    .card { width:min(100%,760px); border:1px solid var(--line); background:linear-gradient(135deg,rgba(19,39,65,.92),rgba(9,20,37,.92)); box-shadow:0 24px 70px rgba(0,0,0,.3); border-radius:24px; padding:clamp(26px,5vw,52px); }
-    h1 { font-size:clamp(2.2rem,6vw,4.8rem); letter-spacing:-.06em; line-height:.94; margin:13px 0 20px; max-width:650px; }
-    h2 { font-size:clamp(1.45rem,3vw,2.15rem); letter-spacing:-.04em; margin:12px 0; }
-    p { color:var(--muted); line-height:1.65; margin:0; }
-    .intro-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:32px 0; }
-    .topic { padding:14px 10px; text-align:center; border-radius:12px; border:1px solid var(--line); color:#b9c9df; font-size:.78rem; font-weight:700; }
-    button { font:inherit; border:0; cursor:pointer; transition:transform .18s,filter .18s,background .18s; }
-    button:hover { transform:translateY(-2px); filter:brightness(1.1); } button:focus-visible { outline:3px solid white; outline-offset:3px; }
-    .primary { border-radius:12px; padding:15px 22px; color:#03141d; font-weight:850; background:var(--cyan); box-shadow:0 10px 25px rgba(62,231,208,.22); }
-    .game-card { width:min(100%,920px); padding:20px; }
-    .hud { display:flex; justify-content:space-between; gap:12px; align-items:center; padding:3px 5px 18px; font-size:.85rem; color:var(--muted); }
-    .progress { height:6px; background:rgba(255,255,255,.08); border-radius:99px; overflow:hidden; flex:1; max-width:320px; }
-    .progress i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--violet)); transition:width .4s; }
-    .arena { position:relative; height:min(56vh,510px); min-height:360px; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:radial-gradient(circle at center,rgba(35,68,102,.42),rgba(6,16,29,.7)); }
-    .arena::after { content:"SCANNER ACTIVE"; position:absolute; bottom:15px; left:18px; color:rgba(143,161,189,.5); font-size:.66rem; letter-spacing:.16em; font-weight:bold; }
-    .arena-message { position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:30px; z-index:1; }
-    .arena-message strong { display:block; font-size:1.4rem; margin-bottom:8px; }
-    .target { position:absolute; z-index:2; width:62px; height:62px; border-radius:50%; background:radial-gradient(circle,#fff 0 11%,var(--cyan) 13% 25%,transparent 27% 41%,var(--cyan) 43% 48%,transparent 50%); box-shadow:0 0 0 9px rgba(62,231,208,.1),0 0 34px rgba(62,231,208,.7); animation:pulse 1s infinite; }
-    @keyframes pulse { 50% { transform:scale(1.1); box-shadow:0 0 0 15px rgba(62,231,208,0),0 0 45px rgba(62,231,208,.9); } }
-    .question-card { width:min(100%,760px); }
-    .meta { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:.82rem; margin-bottom:18px; }
-    .tag { color:var(--cyan); font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
-    .answers { display:grid; gap:11px; margin-top:27px; }
-    .answer { text-align:left; padding:16px 18px; border-radius:12px; color:var(--ink); border:1px solid var(--line); background:rgba(6,15,27,.45); font-weight:650; }
-    .answer:hover { background:rgba(62,231,208,.12); border-color:rgba(62,231,208,.55); }
-    .answer.correct { background:rgba(62,231,208,.16); border-color:var(--cyan); } .answer.wrong { background:rgba(255,105,120,.14); border-color:var(--danger); }
-    .feedback { min-height:26px; margin-top:16px; font-weight:700; } .feedback.good { color:var(--cyan); } .feedback.bad { color:#ff9da7; }
-    .score { font-size:clamp(4.5rem,13vw,8rem); line-height:.8; letter-spacing:-.09em; margin:32px 0 20px; font-weight:900; }
-    .validated { color:var(--cyan); font-size:1.25rem; font-weight:850; margin-bottom:8px; } .retry { color:#ffc971; font-size:1.1rem; font-weight:800; margin-bottom:8px; }
-    .hidden { display:none !important; }
-    @media (max-width:560px) { main { padding:20px 16px; } .intro-grid { grid-template-columns:repeat(2,1fr); } .card { padding:28px 22px; } .hud { flex-wrap:wrap; } .progress { order:3; flex-basis:100%; max-width:none; } }
+    body { min-width:320px; margin:0; min-height:100vh; color:var(--ink); font-family:Nunito,system-ui,sans-serif; background:#fff2c9; overflow-x:hidden; }
+    body::before, body::after { content:""; position:fixed; z-index:-1; border-radius:50%; opacity:.8; }
+    body::before { width:27rem; height:27rem; background:#ffd667; top:-11rem; left:-10rem; } body::after { width:30rem; height:30rem; background:#b3ecf1; right:-14rem; bottom:-14rem; }
+    .sprinkles { position:fixed; inset:0; z-index:-1; pointer-events:none; background-image:radial-gradient(circle at 13% 20%,#fb789f 0 5px,transparent 6px),radial-gradient(circle at 89% 13%,#8d6bd0 0 5px,transparent 6px),radial-gradient(circle at 84% 71%,#fb789f 0 4px,transparent 5px),radial-gradient(circle at 12% 83%,#8d6bd0 0 5px,transparent 6px); }
+    main { width:min(1120px,100%); margin:auto; padding:30px 22px 45px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:22px; }
+    .brand { display:flex; align-items:center; gap:10px; font:800 1.2rem "Baloo 2",cursive; } .brand-icon { width:39px; aspect-ratio:1; display:grid; place-items:center; color:white; background:var(--pink); border-radius:12px 17px 12px 17px; transform:rotate(-9deg); font-size:1.35rem; box-shadow:4px 5px 0 #dc4d7d; }
+    .badge { padding:8px 15px; background:#fff; color:#79648e; border-radius:999px; font-size:.8rem; font-weight:800; box-shadow:0 4px 0 rgba(77,43,101,.1); }
+    .hero { display:grid; grid-template-columns:minmax(280px,.9fr) minmax(390px,1.1fr); align-items:center; gap:42px; }
+    .intro { padding:16px 0 16px 18px; } .eyebrow { display:inline-block; padding:6px 12px; color:#fff; font-size:.75rem; font-weight:800; letter-spacing:.08em; background:var(--purple); border-radius:999px; transform:rotate(-2deg); }
+    h1 { max-width:480px; margin:14px 0 12px; font:800 clamp(3rem,6vw,5.35rem)/.85 "Baloo 2",cursive; letter-spacing:-.06em; } h1 em { font-style:normal; color:var(--pink); } p { max-width:420px; margin:0; color:#735f86; font-size:1.06rem; line-height:1.55; font-weight:700; }
+    .how { display:flex; gap:11px; align-items:center; margin-top:24px; color:#805f99; font-size:.9rem; font-weight:800; } .how span { width:31px; height:31px; display:grid; place-items:center; border-radius:50%; color:#fff; background:var(--blue); box-shadow:0 3px 0 #3eacbd; }
+    .puzzle-card { position:relative; padding:17px; background:#fffdf8; border:4px solid white; border-radius:30px; box-shadow:var(--shadow); transform:rotate(1.1deg); }
+    .puzzle-card::before { content:""; position:absolute; width:58px; height:22px; top:-14px; left:52%; background:#ffc850; transform:rotate(6deg); border-radius:4px; opacity:.85; }
+    .puzzle-top { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 4px 13px; } .puzzle-top strong { font:800 1.15rem "Baloo 2",cursive; } .counter { color:#8e769d; font-weight:800; font-size:.82rem; }
+    .board { position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:7px; aspect-ratio:1; padding:8px; border-radius:21px; background:#f1e2d4; overflow:hidden; }
+    .slot { position:relative; min-width:0; border:2px dashed #d5bfad; border-radius:9px; background:rgba(255,255,255,.48); transition:.18s; } .slot.ready { border-color:var(--purple); background:#eee0ff; } .slot.correct { border:0; background:transparent; }
+    .piece { width:100%; height:100%; min-height:0; border:0; border-radius:8px; cursor:pointer; background-color:white; background-repeat:no-repeat; box-shadow:0 3px 7px rgba(72,38,89,.25); transition:transform .2s, box-shadow .2s, filter .2s; } .piece:hover { transform:scale(1.045) rotate(-1deg); box-shadow:0 6px 12px rgba(72,38,89,.3); } .piece.selected { outline:4px solid var(--yellow); outline-offset:2px; transform:scale(1.04); } .piece:focus-visible,.action:focus-visible { outline:4px solid var(--purple); outline-offset:4px; }
+    .actions { display:flex; align-items:center; justify-content:space-between; gap:13px; margin-top:15px; padding:0 3px; } .hint { color:#8d7999; font-size:.8rem; font-weight:800; } .action { padding:10px 15px; border:0; border-radius:12px; color:white; background:var(--purple); font:800 .85rem Nunito,sans-serif; box-shadow:0 4px 0 #604091; cursor:pointer; } .action:active { transform:translateY(3px); box-shadow:0 1px 0 #604091; }
+    .celebration { position:fixed; inset:0; z-index:10; display:none; place-items:center; padding:20px; background:rgba(69,39,90,.55); backdrop-filter:blur(5px); } .celebration.open { display:grid; animation:fade .35s; } @keyframes fade { from { opacity:0; } }
+    .modal { position:relative; width:min(510px,100%); padding:28px; text-align:center; background:#fffdf5; border:5px solid #fff; border-radius:34px; box-shadow:0 24px 70px rgba(44,21,61,.35); overflow:hidden; } .modal::before { content:"✦  ✦  ✦"; display:block; color:#ffc840; letter-spacing:15px; font-size:1.6rem; } .modal-image { width:min(315px,84vw); aspect-ratio:1; margin:7px auto 14px; border:7px solid #ffcf51; border-radius:50%; background-size:300% 300%; background-position:center; box-shadow:0 6px 0 #e6a929; } .modal h2 { margin:0; color:var(--pink); font:800 clamp(2.7rem,10vw,4.4rem)/.9 "Baloo 2",cursive; letter-spacing:-.06em; } .modal p { margin:9px auto 19px; } .confetti { position:absolute; inset:0; pointer-events:none; background:linear-gradient(55deg,transparent 10%,#67d9e7 10% 12%,transparent 12% 40%,#fa6c9b 40% 42%,transparent 42%) 0 0/100px 110px; opacity:.3; }
+    @media (max-width:760px) { main { padding:20px 16px 34px; } header { margin-bottom:5px; } .badge { display:none; } .hero { grid-template-columns:1fr; gap:17px; } .intro { padding:10px 8px; text-align:center; } h1,p { margin-left:auto; margin-right:auto; } .how { justify-content:center; } .puzzle-card { width:min(540px,100%); margin:auto; } }
   </style>
 </head>
 <body>
+  <div class="sprinkles"></div>
   <main>
-    <header class="topbar"><div class="brand"><span class="brand-mark">⌁</span><span>CYBER ACADEMY</span></div><span class="round" id="roundLabel">ÉVALUATION • 10 DÉFIS</span></header>
-    <section class="screen">
-      <article class="card" id="intro">
-        <div class="eyebrow">Évaluation de fin de module</div>
-        <h1>Visez juste.<br>Répondez vite.</h1>
-        <p>Repérez les cibles dès leur apparition. Votre temps de réaction détermine la difficulté de la question de cybersécurité qui suit.</p>
-        <div class="intro-grid"><div class="topic">IAM</div><div class="topic">GRC</div><div class="topic">SOC</div><div class="topic">SÉCURITÉ IA</div></div>
-        <button class="primary" id="startButton">Démarrer l'évaluation <span aria-hidden="true">→</span></button>
-      </article>
-      <article class="card game-card hidden" id="game" aria-live="polite">
-        <div class="hud"><span id="challengeLabel">DÉFI 1 / 10</span><div class="progress"><i id="progressBar"></i></div><span id="scoreLabel">0 bonne réponse</span></div>
-        <div class="arena" id="arena"><div class="arena-message" id="arenaMessage"><div><strong>Restez prêt</strong><span>La cible peut apparaître n'importe où.</span></div></div></div>
-      </article>
-      <article class="card question-card hidden" id="questionPanel" aria-live="polite">
-        <div class="meta"><span class="tag" id="topicLabel"></span><span id="reactionLabel"></span></div>
-        <div class="eyebrow" id="difficultyLabel"></div><h2 id="questionText"></h2>
-        <div class="answers" id="answers"></div><div class="feedback" id="feedback"></div>
-      </article>
-      <article class="card hidden" id="results"><div class="eyebrow">Rapport d'évaluation</div><h2>Mission terminée.</h2><div class="score" id="finalScore">0/10</div><div id="resultStatus"></div><p id="resultDetail"></p><br><button class="primary" id="restartButton">Rejouer l'évaluation</button></article>
+    <header><div class="brand"><span class="brand-icon">✦</span><span>La grande surprise</span></div><span class="badge">UN PETIT DÉFI POUR TOI</span></header>
+    <section class="hero">
+      <div class="intro"><span class="eyebrow">MISSION DU JOUR</span><h1>Recompose la <em>photo&nbsp;!</em></h1><p>Chaque pièce dévoile un petit morceau de la surprise. À toi de remettre le portrait dans le bon ordre&nbsp;!</p><div class="how"><span>1</span> Choisis une pièce, puis sa place sur la grille.</div></div>
+      <section class="puzzle-card" aria-labelledby="puzzle-title"><div class="puzzle-top"><strong id="puzzle-title">Le puzzle mystère</strong><span class="counter" id="counter">0 / 9 pièces</span></div><div class="board" id="board" aria-label="Grille du puzzle"></div><div class="actions"><span class="hint" id="hint">Les pièces sont mélangées !</span><button class="action" id="shuffle" type="button">Mélanger ↻</button></div></section>
     </section>
   </main>
+  <section class="celebration" id="celebration" role="dialog" aria-modal="true" aria-labelledby="birthday-title"><div class="modal"><div class="confetti"></div><div class="modal-image" id="modalImage" aria-label="Portrait reconstitué"></div><h2 id="birthday-title">Joyeux<br>anniversaire !</h2><p>Bravo, tu as reconstitué la surprise. Que cette journée soit pleine de rires et de confettis&nbsp;!</p><button class="action" id="again" type="button">Rejouer le puzzle</button></div></section>
   <script>
-    const questions = [
-      ['IAM',1,'Quel principe limite un utilisateur aux seuls droits nécessaires ?', ['Moindre privilège','Segmentation réseau','Chiffrement symétrique'],0],
-      ['IAM',1,'Quel facteur ajoute une vérification au-delà du mot de passe ?', ['MFA','VPN','DNS'],0],
-      ['IAM',1,'Quel élément doit être désactivé quand un collaborateur part ?', ['Son compte utilisateur','Le pare-feu','Le SIEM'],0],
-      ['IAM',2,'Quel protocole délègue un accès sans partager le mot de passe ?', ['OAuth 2.0','SMTP','SNMP'],0],
-      ['IAM',2,'Que fournit un SSO ?', ['Une authentification pour plusieurs services','Un antivirus partagé','Une sauvegarde centralisée'],0],
-      ['IAM',2,'Dans RBAC, les permissions sont principalement attribuées selon…', ['le rôle','l’adresse IP','la puissance du poste'],0],
-      ['IAM',3,'Quelle pratique réduit le risque lié aux comptes à privilèges ?', ['Accès juste-à-temps et journalisé','Partage du compte administrateur','Droits permanents pour tous'],0],
-      ['IAM',3,'Quel risque vise la revue périodique des habilitations ?', ['L’accumulation de droits inutiles','La perte de paquets','La saturation CPU'],0],
-      ['GRC',1,'Que signifie GRC ?', ['Gouvernance, Risques et Conformité','Gestion, Réseau et Cryptographie','Garanties, Réponse et Contrôle'],0],
-      ['GRC',1,'Un risque est généralement évalué selon…', ['probabilité et impact','couleur et taille','âge du système'],0],
-      ['GRC',1,'Quelle action diminue la probabilité d’un risque ?', ['Mettre en place un contrôle','Ignorer le risque','Augmenter le budget'],0],
-      ['GRC',2,'Quel document formalise les règles de sécurité de l’organisation ?', ['La PSSI','Le journal système','Le certificat TLS'],0],
-      ['GRC',2,'Accepter un risque signifie…', ['Le conserver après décision formelle','Le supprimer techniquement','Le transférer automatiquement'],0],
-      ['GRC',2,'Quel contrôle vérifie qu’une exigence est respectée ?', ['Un audit','Un phishing','Un scan de ports'],0],
-      ['GRC',3,'Quel traitement consiste à transférer les conséquences financières ?', ['Le transfert par assurance','L’évitement','La réduction'],0],
-      ['GRC',3,'Quelle est la finalité d’un registre des risques ?', ['Suivre propriétaires, traitements et évolution','Stocker les mots de passe','Déployer les correctifs'],0],
-      ['SOC',1,'Quel outil centralise et corrèle les journaux de sécurité ?', ['SIEM','CRM','IDE'],0],
-      ['SOC',1,'Quelle équipe surveille et répond aux alertes ?', ['Le SOC','Les achats','Les ressources humaines'],0],
-      ['SOC',1,'Quel est le premier objectif d’une alerte ?', ['Détecter un comportement suspect','Chiffrer les disques','Créer un compte'],0],
-      ['SOC',2,'Que décrit un playbook SOC ?', ['Les étapes standard de réponse à un incident','La topologie du bâtiment','Le planning des congés'],0],
-      ['SOC',2,'Quelle action aide à contenir un poste compromis ?', ['L’isoler du réseau','Le redémarrer sans analyse','Supprimer tous les logs'],0],
-      ['SOC',2,'Un faux positif est…', ['Une alerte sans menace réelle','Une attaque confirmée','Un correctif urgent'],0],
-      ['SOC',3,'Quelle métrique mesure le délai moyen de détection ?', ['MTTD','MTTR','SLA'],0],
-      ['SOC',3,'Pourquoi préserver les preuves lors d’un incident ?', ['Pour permettre l’analyse et la traçabilité','Pour accélérer la suppression des journaux','Pour éviter toute escalade'],0],
-      ['IA',1,'Quel risque apparaît si une IA invente une information ?', ['Hallucination','Hameçonnage','Déni de service'],0],
-      ['IA',1,'Que ne faut-il pas soumettre à un outil d’IA non approuvé ?', ['Des données sensibles','Une question publique','Un exercice fictif'],0],
-      ['IA',2,'Quelle attaque tente de contourner les instructions d’un modèle ?', ['Injection de prompt','Brute force DNS','ARP spoofing'],0],
-      ['IA',2,'Quel contrôle réduit les fuites de données via un LLM ?', ['Filtrage et minimisation des données','Plus de paramètres','Un écran plus grand'],0],
-      ['IA',3,'Pourquoi tester un modèle contre le prompt injection ?', ['Pour mesurer sa résistance aux instructions malveillantes','Pour accélérer son entraînement','Pour réduire le coût du réseau'],0],
-      ['IA',3,'Quel principe renforce la confiance dans une décision automatisée ?', ['Traçabilité et supervision humaine','Opacité totale','Absence de journalisation'],0]
-    ];
-    const $ = id => document.getElementById(id);
-    let deck=[], topicDeck=[], round=0, score=0, startedAt=0, targetTimer, question;
-    const shuffle = a => [...a].sort(() => Math.random() - .5);
-    function start() { deck=shuffle(questions); topicDeck=[...shuffle(['IAM','GRC','SOC','IA']),...shuffle(['IAM','GRC','SOC','IA']),...shuffle(['IAM','GRC','SOC','IA']).slice(0,2)]; round=0; score=0; $('intro').classList.add('hidden'); $('results').classList.add('hidden'); $('game').classList.remove('hidden'); nextTarget(); }
-    function nextTarget() { $('questionPanel').classList.add('hidden'); $('game').classList.remove('hidden'); $('challengeLabel').textContent=`DÉFI ${round+1} / 10`; $('scoreLabel').textContent=`${score} bonne${score!==1?'s':''} réponse${score!==1?'s':''}`; $('progressBar').style.width=`${round*10}%`; $('arenaMessage').classList.remove('hidden'); $('arenaMessage').innerHTML='<div><strong>Analyse en cours…</strong><span>Repérez la cible.</span></div>'; targetTimer=setTimeout(showTarget,700+Math.random()*1300); }
-    function showTarget() { const arena=$('arena'), t=document.createElement('button'); t.className='target'; t.setAttribute('aria-label','Cible détectée'); t.style.left=`${8+Math.random()*78}%`; t.style.top=`${10+Math.random()*72}%`; $('arenaMessage').classList.add('hidden'); arena.append(t); startedAt=performance.now(); t.addEventListener('click', hit); }
-    function hit(e) { const reaction=Math.round(performance.now()-startedAt); e.currentTarget.remove(); question=pickQuestion(reaction); showQuestion(reaction); }
-    function pickQuestion(ms) { const difficulty=ms<550?1:ms<1100?2:3, topic=topicDeck[round]; let index=deck.findIndex(q=>q[0]===topic && q[1]===difficulty); if(index<0) index=deck.findIndex(q=>q[0]===topic); return deck.splice(index,1)[0]; }
-    function showQuestion(ms) { $('game').classList.add('hidden'); $('questionPanel').classList.remove('hidden'); $('topicLabel').textContent=question[0]; $('reactionLabel').textContent=`Réflexe : ${(ms/1000).toFixed(2)} s`; $('difficultyLabel').textContent=`NIVEAU ${question[1]} / 3`; $('questionText').textContent=question[2]; $('feedback').textContent=''; const answers=$('answers'); answers.innerHTML=''; question[3].forEach((answer,index)=>{ const b=document.createElement('button'); b.className='answer'; b.textContent=answer; b.addEventListener('click',()=>answerQuestion(index)); answers.append(b); }); }
-    function answerQuestion(index) { const buttons=[...$('answers').children], correct=question[4]; buttons.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');}); const won=index===correct; if(won){score++;$('feedback').textContent='Bien vu — réponse validée.';$('feedback').className='feedback good';}else{$('feedback').textContent='À revoir : la bonne réponse est indiquée.';$('feedback').className='feedback bad';buttons[index].classList.add('wrong');} round++; setTimeout(round===10?finish:nextTarget,1150); }
-    function finish() { $('questionPanel').classList.add('hidden'); $('results').classList.remove('hidden'); $('finalScore').textContent=`${score}/10`; const validated=score>8; $('resultStatus').innerHTML=validated?'<div class="validated">✓ Compétences validées</div>':'<div class="retry">Compétences à consolider</div>'; $('resultDetail').textContent=validated?'Excellente maîtrise des fondamentaux de la cybersécurité.':'Objectif : au moins 9 bonnes réponses. Rejouez pour renforcer vos acquis.'; $('roundLabel').textContent='RÉSULTAT • ÉVALUATION TERMINÉE'; }
-    $('startButton').addEventListener('click',start); $('restartButton').addEventListener('click',()=>{ $('roundLabel').textContent='ÉVALUATION • 10 DÉFIS'; start(); });
+    const portrait = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600"><defs><linearGradient id="b" x2="0" y2="1"><stop stop-color="#fff1ca"/><stop offset="1" stop-color="#f9ba94"/></linearGradient></defs><rect width="600" height="600" fill="url(#b)"/><path fill="#42324b" d="M25 195Q20 15 291 10T583 200L535 270 67 261Z"/><path fill="#252031" d="M0 574V421q80-105 174-101h253q120 6 173 101v153"/><path fill="#ffbc91" d="M188 364h224v115q-21 61-110 69-92-8-114-69z"/><ellipse cx="300" cy="252" rx="190" ry="222" fill="#ffc49d"/><path fill="#42324b" d="M91 222Q67 22 290 22t222 198Q445 145 354 141q-139-14-263 81"/><path fill="#42324b" d="M170 222q42-27 92-2l-6 17q-52-11-87 7zm170-1q49-27 95 3l-5 19q-46-17-87-5z"/><ellipse cx="216" cy="273" rx="40" ry="31" fill="#f9ffff"/><ellipse cx="388" cy="273" rx="40" ry="31" fill="#f9ffff"/><circle cx="219" cy="275" r="17" fill="#71a9ad"/><circle cx="385" cy="275" r="17" fill="#71a9ad"/><circle cx="219" cy="275" r="8"/><circle cx="385" cy="275" r="8"/><circle cx="300" cy="358" r="51" fill="#f04c42"/><path fill="#eb3c38" d="M235 180l24-82 21 80zm77-84 25 81 25-79zm55 249 22 92 19-84zM240 474l61 65 60-65-38 20-22-26-23 27z"/><path fill="none" stroke="#8f5c54" stroke-width="9" stroke-linecap="round" d="M246 431q54 33 108 0"/><path fill="#315c9c" d="M104 600V490q108-53 196 17 92-70 196-17v110"/><path fill="none" stroke="#f9f5e9" stroke-width="15" d="M146 524q152 87 307 0m-255 27q101 55 204 0"/></svg>`;
+    const image = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(portrait)}`;
+    const board = document.querySelector('#board'), counter = document.querySelector('#counter'), hint = document.querySelector('#hint'), celebration = document.querySelector('#celebration');
+    document.querySelector('#modalImage').style.backgroundImage = `url("${image}")`;
+    let selected = null, placed = 0;
+    const shuffle = items => [...items].sort(() => Math.random() - .5);
+    function makePiece(piece) { const button=document.createElement('button'); button.className='piece'; button.type='button'; button.dataset.piece=piece; button.setAttribute('aria-label',`Pièce ${piece + 1}`); button.style.backgroundImage=`url("${image}")`; button.style.backgroundSize='300% 300%'; button.style.backgroundPosition=`${(piece%3)*50}% ${Math.floor(piece/3)*50}%`; button.addEventListener('click',()=>select(button)); return button; }
+    function select(piece) { if (selected) selected.classList.remove('selected'); selected=piece; selected.classList.add('selected'); [...document.querySelectorAll('.slot:not(.correct)')].forEach(slot=>slot.classList.add('ready')); hint.textContent='Maintenant, choisis son emplacement !'; }
+    function reset() { selected=null; placed=0; counter.textContent='0 / 9 pièces'; hint.textContent='Les pièces sont mélangées !'; board.innerHTML=''; shuffle([...Array(9).keys()]).forEach((piece,index)=>{ const slot=document.createElement('div'); slot.className='slot'; slot.dataset.slot=index; slot.setAttribute('aria-label',`Emplacement ${index+1}`); slot.addEventListener('click',()=>drop(slot)); slot.append(makePiece(piece)); board.append(slot); }); }
+    function drop(slot) { if (!selected || slot.classList.contains('correct')) return; const source=selected.parentElement; if (source===slot) return; const targetPiece=slot.firstElementChild; source.append(targetPiece); slot.append(selected); selected.classList.remove('selected'); selected=null; document.querySelectorAll('.slot').forEach(s=>s.classList.remove('ready')); check(); }
+    function check() { placed=[...document.querySelectorAll('.slot')].filter(slot=>Number(slot.dataset.slot)===Number(slot.firstElementChild.dataset.piece)).length; counter.textContent=`${placed} / 9 pièces`; hint.textContent=placed===9?'C’est parfait !':'Continue, tu y es presque !'; if(placed===9) setTimeout(()=>celebration.classList.add('open'),450); }
+    document.querySelector('#shuffle').addEventListener('click',reset); document.querySelector('#again').addEventListener('click',()=>{celebration.classList.remove('open');reset();}); reset();
   </script>
 </body>
 </html>
